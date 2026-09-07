@@ -18,10 +18,13 @@ Generates the hero image that appears at the top of a park's Team Home screen on
 Before generating, research the real park's water feature, palm/tree lines, path layout, skyline/mountain backdrop, and general terrain. State findings briefly. Reuse research already on file if this park was researched previously (e.g. Lorenzi Park's twin spring-fed lakes, palm trees, rose gardens, tennis/ball fields, Vegas skyline, Spring Mountains).
 
 ## Step 2: The Monument figure — hard rules on SCALE (critical, most commonly gotten wrong)
-- **The figure must be modestly sized — roughly 25-30% of the total frame height, not colossal.** This screen has to comfortably host a roster carousel of 10-15 players below/around it, so the figure cannot dominate the frame the way a mascot once did.
-- Reference proportions: figure occupies only the upper portion of the frame, positioned near the horizon/mountain line, small enough that there is clearly substantial open sky and park space remaining around and below him — NOT stretching from mid-frame down to the treeline.
-- Do not scale him "colossal" or "towering over the whole park" — think a distant, respectfully-sized commemorative figure on the horizon, not a kaiju-scale monument.
-- **Waist-up only.** The figure is cropped at the belt/waist by the horizon or mountain line — never a full standing body, never legs or feet. The visible torso-and-head portion is what must measure ~25-30% of total frame height.
+- **Visible waist-up figure = 18-22% of total frame height (target 20%).** Anything larger is wrong. This screen must comfortably host a roster carousel of 10-15 players, so the figure never dominates the frame.
+- **Vertical placement:** top of the head sits ~28-32% down from the top of the frame; the belt line lands exactly on the distant treeline/mountain horizon, with everything below the belt hidden behind the horizon.
+- **Horizontal placement:** one figure only, centered horizontally.
+- Result to check against: wide open empty sky above the head, the entire park (lake, palms, lawns, paths) clearly visible below, and the bottom half calm and uncluttered.
+- Do not scale him "colossal", "towering", or "filling the upper half" — he is a small, distant, respectfully-sized commemorative apparition on the horizon.
+- **Waist-up only.** Never a full standing body, never legs or feet.
+- Image models reliably generate the figure too large. The dependable method is compositing, not prompting: generate the scene, generate/keep a clean plate with the figure removed, extract the figure by diffing the two, then scale it to the exact percentage above, center it, apply ~0.8 alpha, and paste it with the belt on the horizon.
 
 ## Step 3: The Monument figure — other hard rules
 - The figure is a **ghostly/translucent bronze-gold apparition** of one specific real player, standing distant near the park's horizon or mountain line — NOT rising out of the water, NOT placed in the middle of the lake, and NOT solid/opaque like a physical statue.
