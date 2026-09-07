@@ -31,7 +31,7 @@ function Index() {
         src={monument.url}
         width={768}
         height={1376}
-        alt="A colossal bronze statue of a Legends of Lorenzi Park champion rising from the Lorenzi Park lake at sunset"
+        alt="A colossal translucent bronze-gold apparition of a Legends of Lorenzi Park champion standing near the Spring Mountains behind Lorenzi Park at sunset"
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-x-0 bottom-0 z-10 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
