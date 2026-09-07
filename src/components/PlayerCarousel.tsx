@@ -230,14 +230,6 @@ export function PlayerCarousel() {
         })}
       </div>
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent"
-      />
 
       <div className="mt-2 flex items-center justify-center gap-3">
         <button
