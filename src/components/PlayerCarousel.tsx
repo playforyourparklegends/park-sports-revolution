@@ -182,7 +182,7 @@ export function PlayerCarousel() {
               role="group"
               aria-roledescription="slide"
               aria-label={`Card ${i + 1} of ${CARD_COUNT}`}
-              className="relative aspect-3/4 w-[46vw] shrink-0 snap-center [perspective:1000px]"
+              className="relative aspect-5/6 w-[22vw] shrink-0 snap-center [perspective:1000px]"
             >
               <div
                 data-depth
