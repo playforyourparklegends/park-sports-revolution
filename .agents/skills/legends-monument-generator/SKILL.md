@@ -21,6 +21,7 @@ Before generating, research the real park's water feature, palm/tree lines, path
 - **The figure must be modestly sized — roughly 25-30% of the total frame height, not colossal.** This screen has to comfortably host a roster carousel of 10-15 players below/around it, so the figure cannot dominate the frame the way a mascot once did.
 - Reference proportions: figure occupies only the upper portion of the frame, positioned near the horizon/mountain line, small enough that there is clearly substantial open sky and park space remaining around and below him — NOT stretching from mid-frame down to the treeline.
 - Do not scale him "colossal" or "towering over the whole park" — think a distant, respectfully-sized commemorative figure on the horizon, not a kaiju-scale monument.
+- **Waist-up only.** The figure is cropped at the belt/waist by the horizon or mountain line — never a full standing body, never legs or feet. The visible torso-and-head portion is what must measure ~25-30% of total frame height.
 
 ## Step 3: The Monument figure — other hard rules
 - The figure is a **ghostly/translucent bronze-gold apparition** of one specific real player, standing distant near the park's horizon or mountain line — NOT rising out of the water, NOT placed in the middle of the lake, and NOT solid/opaque like a physical statue.
