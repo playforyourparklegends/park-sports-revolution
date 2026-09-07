@@ -170,7 +170,7 @@ export function PlayerCarousel() {
         ref={trackRef}
         onScroll={onScroll}
         style={{ touchAction: "pan-x", perspective: "1000px" }}
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[27%] py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[27vw] py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {Array.from({ length: CARD_COUNT }).map((_, i) => {
           const isActive = i === active;
@@ -184,7 +184,7 @@ export function PlayerCarousel() {
               role="group"
               aria-roledescription="slide"
               aria-label={`Card ${i + 1} of ${CARD_COUNT}`}
-              className="relative aspect-3/4 w-[46%] shrink-0 snap-center [perspective:1000px]"
+              className="relative aspect-3/4 w-[46vw] shrink-0 snap-center [perspective:1000px]"
             >
               <div
                 data-depth
