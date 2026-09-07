@@ -168,7 +168,7 @@ export function PlayerCarousel() {
         ref={trackRef}
         onScroll={onScroll}
         style={{ touchAction: "pan-x", perspective: "1000px" }}
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[27vw] py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory gap-[1.5vw] overflow-x-auto overscroll-x-contain px-[38vw] py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {Array.from({ length: CARD_COUNT }).map((_, i) => {
           const isActive = i === active;
@@ -182,7 +182,7 @@ export function PlayerCarousel() {
               role="group"
               aria-roledescription="slide"
               aria-label={`Card ${i + 1} of ${CARD_COUNT}`}
-              className="relative aspect-3/4 w-[46vw] shrink-0 snap-center [perspective:1000px]"
+              className="relative aspect-5/6 w-[22vw] shrink-0 snap-center [perspective:1000px]"
             >
               <div
                 data-depth
@@ -213,9 +213,9 @@ export function PlayerCarousel() {
                     type="button"
                     aria-label="Flip card"
                     onClick={() => setFlipped((f) => !f)}
-                    className="absolute right-3 bottom-3 z-20 inline-flex items-center gap-1 rounded-full border border-gold/50 bg-background/70 px-2.5 py-1.5 text-gold"
+                    className="absolute right-1.5 bottom-1.5 z-20 inline-flex items-center rounded-full border border-gold/50 bg-background/70 p-1 text-gold"
                   >
-                    <RotateCcw className="size-3.5" />
+                    <RotateCcw className="size-2.5" />
                   </button>
                 )}
               </div>
@@ -230,14 +230,6 @@ export function PlayerCarousel() {
         })}
       </div>
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent"
-      />
 
       <div className="mt-2 flex items-center justify-center gap-3">
         <button

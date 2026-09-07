@@ -1,20 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PlayerCarousel } from "@/components/PlayerCarousel";
+import bg from "@/assets/lorenzi-park-lyons-bg.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Legends of the Park — Player Cards" },
+      { title: "Lorenzi Park Lyons — Team Home" },
       {
         name: "description",
         content:
-          "Swipe the Legends of the Park collector card showcase: black-and-gold player cards with flip-to-reveal detail.",
+          "The Lorenzi Park Lyons team home: the lion mascot rising over the Lorenzi Park fountain, with the black-and-gold player card showcase.",
       },
-      { property: "og:title", content: "Legends of the Park — Player Cards" },
+      { property: "og:title", content: "Lorenzi Park Lyons — Team Home" },
       {
         property: "og:description",
         content:
-          "Swipe the Legends of the Park collector card showcase: black-and-gold player cards with flip-to-reveal detail.",
+          "The Lorenzi Park Lyons team home: the lion mascot rising over the Lorenzi Park fountain, with the black-and-gold player card showcase.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -25,11 +26,15 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <main
-      className="min-h-screen bg-background"
-      style={{ paddingTop: "env(safe-area-inset-top)" }}
-    >
-      <PlayerCarousel />
+    <main className="relative min-h-screen overflow-hidden bg-background">
+      <img
+        src={bg.url}
+        alt="The Lorenzi Park Lyons lion mascot rising above the Lorenzi Park lake fountain at sunset"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-x-0 bottom-0 z-10 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+        <PlayerCarousel />
+      </div>
     </main>
   );
 }
