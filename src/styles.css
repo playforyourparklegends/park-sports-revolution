@@ -19,6 +19,9 @@
  */
 
 @theme inline {
+  --font-display: "Playfair Display", serif;
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
