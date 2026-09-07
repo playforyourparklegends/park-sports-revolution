@@ -327,7 +327,7 @@ function CardFace({
           className="pointer-events-none absolute inset-0 mix-blend-screen"
           style={{
             background:
-              "radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.16), rgba(255,255,255,0) 55%)",
+              "radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.10), rgba(255,255,255,0) 45%)",
           }}
         />
         <div
