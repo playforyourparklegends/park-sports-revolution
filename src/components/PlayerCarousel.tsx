@@ -168,7 +168,7 @@ export function PlayerCarousel() {
         ref={trackRef}
         onScroll={onScroll}
         style={{ touchAction: "pan-x", perspective: "1000px" }}
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[27vw] py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory gap-[1.5vw] overflow-x-auto overscroll-x-contain px-[38vw] py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {Array.from({ length: CARD_COUNT }).map((_, i) => {
           const isActive = i === active;
