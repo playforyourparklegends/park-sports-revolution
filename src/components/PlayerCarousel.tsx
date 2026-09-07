@@ -213,9 +213,9 @@ export function PlayerCarousel() {
                     type="button"
                     aria-label="Flip card"
                     onClick={() => setFlipped((f) => !f)}
-                    className="absolute right-3 bottom-3 z-20 inline-flex items-center gap-1 rounded-full border border-gold/50 bg-background/70 px-2.5 py-1.5 text-gold"
+                    className="absolute right-1.5 bottom-1.5 z-20 inline-flex items-center rounded-full border border-gold/50 bg-background/70 p-1 text-gold"
                   >
-                    <RotateCcw className="size-3.5" />
+                    <RotateCcw className="size-2.5" />
                   </button>
                 )}
               </div>
