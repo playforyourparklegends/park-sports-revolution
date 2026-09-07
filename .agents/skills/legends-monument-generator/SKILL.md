@@ -34,8 +34,13 @@ Before generating, research the real park's water feature, palm/tree lines, path
 
 ## Step 4: Official logo placement
 - Composite the official **Legends of the Park** logo (gold/black shield with Nevada silhouette) centered at the very top of the frame, well above the figure's head with clear separation — do not let the logo overlap or crowd the figure.
-- Crop/scale the logo as needed for clean mobile-portrait legibility — it should read clearly at small size at the top of a phone screen.
+- The logo is always a **crisp composited overlay**, never drawn/hallucinated by the image model. Key it off its own source file (luminance-based transparency on the dark sky background) and paste it in.
+- **Full opacity — do not fade, ghost, or blend the crest.** Unlike the figure, the logo is solid and dominant. It is the loudest branding element on the screen.
+- **Size: crest width ~62-66% of frame width**, top edge ~2% down from the top of the frame. Bigger than it feels "safe" — it must read instantly on a phone.
+- Place a soft dark scrim (large blurred ellipse, ~110/255 strength, heavy blur) behind the crest so the gold separates cleanly from a bright stormy sky.
+- If a previous, fainter crest is baked into the base image, patch it out of the sky first (sample and blend clean cloud texture over it) — never stack a new crest on top of an old one.
 - This logo is the only text/branding element in the image besides the jersey chest text.
+
 
 ## Step 5: Scene composition
 - Vertical mobile portrait orientation.
