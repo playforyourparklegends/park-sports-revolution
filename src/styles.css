@@ -22,6 +22,8 @@
   --font-display: "Playfair Display", serif;
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
+  --color-card-lift: var(--card-lift);
+  --color-card-rim: var(--card-rim);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -68,6 +70,12 @@
   --radius: 0.625rem;
   --gold: oklch(0.78 0.1 85);
   --gold-foreground: oklch(0.18 0 0);
+  --gold-dim: oklch(0.38 0.055 85);
+  --gold-bright: oklch(0.84 0.09 88);
+  --card-lift: oklch(0.105 0.006 85);
+  --card-rim: oklch(0.16 0.012 85);
+  --shadow-deep: oklch(0 0 0 / 92%);
+  --highlight-soft: oklch(1 0 0 / 9%);
   --background: oklch(0 0 0);
   --foreground: oklch(0.96 0 0);
   --card: oklch(0 0 0);
@@ -145,5 +153,72 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+  }
+}
+
+@layer components {
+  .card-depth {
+    --drop-y: 20px;
+    --drop-blur: 40px;
+    --gold-blur: 26px;
+    box-shadow:
+      inset 0 1px 0 var(--highlight-soft),
+      0 var(--drop-y) var(--drop-blur) -18px var(--shadow-deep),
+      0 0 var(--gold-blur) -22px var(--gold);
+  }
+
+  .card-metal-frame {
+    background:
+      linear-gradient(
+        138deg,
+        var(--gold-bright) 0%,
+        var(--gold-dim) 19%,
+        color-mix(in oklab, var(--gold) 16%, transparent) 49%,
+        var(--gold-dim) 78%,
+        var(--gold-bright) 100%
+      );
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--gold) 16%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--gold-dim) 48%, transparent);
+  }
+
+  .card-lacquer {
+    background:
+      radial-gradient(140% 92% at 50% -8%, var(--card-lift), var(--background) 58%),
+      var(--background);
+    box-shadow:
+      inset 0 1px 0 var(--highlight-soft),
+      inset 0 0 30px var(--shadow-deep);
+  }
+
+  .card-tonal-falloff {
+    background:
+      linear-gradient(112deg, transparent 8%, color-mix(in oklab, var(--card-rim) 58%, transparent) 35%, transparent 58%),
+      radial-gradient(80% 65% at 50% 42%, color-mix(in oklab, var(--card-lift) 65%, transparent), transparent 72%);
+    opacity: 0.72;
+  }
+
+  .card-edge-light {
+    box-shadow:
+      inset 1px 0 0 color-mix(in oklab, var(--gold) 10%, transparent),
+      inset -1px 0 0 color-mix(in oklab, var(--gold-dim) 10%, transparent),
+      inset 0 -18px 28px var(--shadow-deep);
+  }
+
+  .card-reflection {
+    background:
+      radial-gradient(
+        circle at var(--x, 50%) var(--y, 50%),
+        color-mix(in oklab, var(--foreground) 11%, transparent),
+        transparent 38%
+      ),
+      linear-gradient(118deg, transparent 34%, color-mix(in oklab, var(--foreground) 3%, transparent) 48%, transparent 61%);
+    opacity: 0.68;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-reflection {
+    opacity: 0.34;
   }
 }
