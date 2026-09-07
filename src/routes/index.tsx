@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PlayerCarousel } from "@/components/PlayerCarousel";
-import bg from "@/assets/lorenzi-park-lyons-bg.jpg.asset.json";
+import bg from "@/assets/lorenzi-park-hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
