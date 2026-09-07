@@ -65,11 +65,9 @@ export function PlayerCarousel() {
         depth.style.transform = `translateZ(${-120 * inv}px) rotateY(${side * -14 * inv}deg) scale(${0.9 + 0.1 * t})`;
         depth.style.opacity = String(0.6 + 0.4 * t);
         depth.style.filter = `blur(${1.5 * inv}px)`;
-        depth.style.boxShadow = [
-          `inset 0 1px 0 0 rgba(255,255,255,${(0.08 + 0.02 * t).toFixed(3)})`,
-          `0 ${20 + 20 * t}px ${40 + 40 * t}px -20px #000`,
-          `0 0 ${30 + 30 * t}px -20px var(--gold)`,
-        ].join(", ");
+        depth.style.setProperty("--drop-y", `${20 + 20 * t}px`);
+        depth.style.setProperty("--drop-blur", `${40 + 40 * t}px`);
+        depth.style.setProperty("--gold-blur", `${26 + 28 * t}px`);
       }
       if (veil) veil.style.opacity = String(0.4 * inv);
       if (floor) floor.style.opacity = String(t);
@@ -188,7 +186,7 @@ export function PlayerCarousel() {
             >
               <div
                 data-depth
-                className="relative h-full w-full rounded-3xl [transform-style:preserve-3d]"
+                className="card-depth relative h-full w-full rounded-3xl [transform-style:preserve-3d]"
                 style={{ transition: reduced ? "none" : "box-shadow 300ms ease-out" }}
               >
                 <div
@@ -291,35 +289,25 @@ function CardFace({
   return (
     <div
       aria-hidden={ariaHidden}
-      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold/60 via-gold/10 to-gold/50 p-[1px]"
+      className="card-metal-frame absolute inset-0 rounded-3xl p-[1px]"
       style={{
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? undefined : "none",
         transition: reduced ? "opacity 150ms ease-out" : "opacity 525ms cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-3xl bg-background">
+      <div className="card-lacquer relative h-full w-full overflow-hidden rounded-3xl bg-background">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-60"
-          style={{
-            background:
-              "radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--gold) 12%, transparent), transparent 60%)",
-          }}
+          className="card-tonal-falloff pointer-events-none absolute inset-0"
         />
-        <span
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-center font-display text-5xl tracking-[0.1em] text-gold/25"
-        >
-          L
-        </span>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 mix-blend-screen"
-          style={{
-            background:
-              "radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.10), rgba(255,255,255,0) 45%)",
-          }}
+          className="card-edge-light pointer-events-none absolute inset-0 rounded-3xl"
+        />
+        <div
+          aria-hidden
+          className="card-reflection pointer-events-none absolute inset-0 mix-blend-screen"
         />
         <div
           data-veil
