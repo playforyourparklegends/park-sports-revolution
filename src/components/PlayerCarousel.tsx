@@ -192,11 +192,7 @@ export function PlayerCarousel() {
                 style={{ transition: reduced ? "none" : "box-shadow 300ms ease-out" }}
               >
                 <div
-                  className="h-full w-full [transform-style:preserve-3d]"
-                  style={{
-                    transform: reduced || !isFlipped ? "rotateX(0deg)" : "rotateX(180deg)",
-                    transition: reduced ? "none" : "transform 700ms cubic-bezier(0.2,0.8,0.2,1)",
-                  }}
+                  className="relative h-full w-full"
                   onPointerDown={(e) => onPointerDown(e, i)}
                   onPointerMove={(e) => onPointerMove(e, i)}
                   onPointerUp={() => onPointerUp(i)}
@@ -204,15 +200,13 @@ export function PlayerCarousel() {
                 >
                   <CardFace
                     reduced={reduced}
-                    hidden={reduced ? isFlipped : false}
+                    visible={!isFlipped}
                     ariaHidden={isFlipped}
-                    back={false}
                   />
                   <CardFace
                     reduced={reduced}
-                    hidden={reduced ? !isFlipped : false}
+                    visible={isFlipped}
                     ariaHidden={!isFlipped}
-                    back
                   />
                 </div>
 
