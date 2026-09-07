@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "The Legends of Lorenzi Park team home: the bronze champion monument rising from the Lorenzi Park lake, with the black-and-gold player card showcase.",
+          "The Legends of Lorenzi Park team home: a ghostly bronze champion monument watching over Lorenzi Park from the horizon, with the black-and-gold player card showcase.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
