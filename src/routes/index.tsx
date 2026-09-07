@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PlayerCarousel } from "@/components/PlayerCarousel";
-import bg from "@/assets/lorenzi-park-lyons-bg.jpg.asset.json";
+import bg from "@/assets/lorenzi-park-hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,7 +28,9 @@ function Index() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">
       <img
-        src={bg.url}
+        src={bg}
+        width={1088}
+        height={1920}
         alt="The Lorenzi Park Lyons lion mascot rising above the Lorenzi Park lake fountain at sunset"
         className="absolute inset-0 h-full w-full object-cover"
       />
