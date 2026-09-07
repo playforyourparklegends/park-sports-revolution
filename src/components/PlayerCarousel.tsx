@@ -280,25 +280,22 @@ export function PlayerCarousel() {
 }
 
 function CardFace({
-  back,
-  hidden,
+  visible,
   ariaHidden,
   reduced,
 }: {
-  back: boolean;
-  hidden: boolean;
+  visible: boolean;
   ariaHidden: boolean;
   reduced: boolean;
 }) {
   return (
     <div
       aria-hidden={ariaHidden}
-      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold/60 via-gold/10 to-gold/50 p-[1px] [backface-visibility:hidden]"
+      className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold/60 via-gold/10 to-gold/50 p-[1px]"
       style={{
-        transform: back && !reduced ? "rotateX(180deg)" : undefined,
-        opacity: reduced ? (hidden ? 0 : 1) : 1,
-        pointerEvents: hidden ? "none" : undefined,
-        transition: reduced ? "opacity 300ms ease-out" : undefined,
+        opacity: visible ? 1 : 0,
+        pointerEvents: visible ? undefined : "none",
+        transition: reduced ? "opacity 150ms ease-out" : "opacity 525ms cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
       <div className="relative h-full w-full overflow-hidden rounded-3xl bg-background">
