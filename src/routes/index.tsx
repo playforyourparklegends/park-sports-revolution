@@ -28,7 +28,7 @@ function Index() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">
       <img
-        src={monument.url}
+        src={monument}
         width={768}
         height={1376}
         alt="A distant translucent bronze-gold apparition of a Legends of Lorenzi Park champion standing near the Spring Mountains behind Lorenzi Park at sunset"
