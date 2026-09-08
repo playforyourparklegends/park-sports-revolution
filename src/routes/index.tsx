@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PlayerCarousel } from "@/components/PlayerCarousel";
+import { ParkAmbassadorsTitle } from "@/components/ParkAmbassadorsTitle";
 import monument from "@/assets/lorenzi-park-monument.jpg";
 
 export const Route = createFileRoute("/")({
@@ -36,6 +37,7 @@ function Index() {
       />
       <div className="absolute inset-x-0 bottom-0 z-10 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
         <PlayerCarousel />
+        <ParkAmbassadorsTitle />
       </div>
     </main>
   );
