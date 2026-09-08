@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import { PlayerCarousel } from "@/components/PlayerCarousel";
@@ -59,7 +59,16 @@ function ParkHome() {
       <div className="absolute inset-x-0 bottom-0 z-10 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
         <PlayerCarousel />
         <ParkAmbassadorsTitle />
+        <div className="mt-1 text-center">
+          <Link
+            to="/ambassador"
+            className="text-[9px] uppercase tracking-[0.28em] text-gold/70 transition-colors hover:text-gold"
+          >
+            Become a Park Ambassador
+          </Link>
+        </div>
       </div>
+
     </main>
   );
 }

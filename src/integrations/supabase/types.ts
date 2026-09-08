@@ -14,6 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      ambassador_applications: {
+        Row: {
+          day_job_photo_url: string | null
+          day_job_title: string
+          id: string
+          park: string
+          reviewed_at: string | null
+          reviewer_note: string | null
+          status: string
+          submitted_at: string
+          user_id: string
+          why_trust_me_text: string | null
+          why_trust_me_video_url: string
+        }
+        Insert: {
+          day_job_photo_url?: string | null
+          day_job_title: string
+          id?: string
+          park: string
+          reviewed_at?: string | null
+          reviewer_note?: string | null
+          status?: string
+          submitted_at?: string
+          user_id: string
+          why_trust_me_text?: string | null
+          why_trust_me_video_url: string
+        }
+        Update: {
+          day_job_photo_url?: string | null
+          day_job_title?: string
+          id?: string
+          park?: string
+          reviewed_at?: string | null
+          reviewer_note?: string | null
+          status?: string
+          submitted_at?: string
+          user_id?: string
+          why_trust_me_text?: string | null
+          why_trust_me_video_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ambassador_applications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -21,6 +71,7 @@ export type Database = {
           fan_tier: string | null
           favorite_park: string | null
           id: string
+          is_admin: boolean
         }
         Insert: {
           created_at?: string
@@ -28,6 +79,7 @@ export type Database = {
           fan_tier?: string | null
           favorite_park?: string | null
           id: string
+          is_admin?: boolean
         }
         Update: {
           created_at?: string
@@ -35,6 +87,7 @@ export type Database = {
           fan_tier?: string | null
           favorite_park?: string | null
           id?: string
+          is_admin?: boolean
         }
         Relationships: []
       }
