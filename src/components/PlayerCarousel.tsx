@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
+import type { AmbassadorCard } from "@/lib/ambassadors.functions";
 
-const CARD_COUNT = 5;
-const START_INDEX = 2;
+const PLACEHOLDER_COUNT = 5;
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -16,7 +16,11 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
-export function PlayerCarousel() {
+export function PlayerCarousel({ cards }: { cards?: AmbassadorCard[] | undefined }) {
+  const items: Array<AmbassadorCard | null> =
+    cards && cards.length > 0 ? cards : Array.from({ length: PLACEHOLDER_COUNT }, () => null);
+  const CARD_COUNT = items.length;
+  const START_INDEX = Math.floor(CARD_COUNT / 2);
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
   const rafRef = useRef<number | null>(null);
@@ -50,7 +54,10 @@ export function PlayerCarousel() {
     const step = stepWidth();
     const pos = track.scrollLeft / step;
     const nearest = Math.max(0, Math.min(CARD_COUNT - 1, Math.round(pos)));
-    setActive((prev) => (prev === nearest ? prev : nearest));
+    setActive((prev) => {
+      if (prev !== nearest) setFlipped(false);
+      return prev === nearest ? prev : nearest;
+    });
 
     cardRefs.current.forEach((card, i) => {
       if (!card) return;
@@ -59,7 +66,7 @@ export function PlayerCarousel() {
       const side = d < 0 ? -1 : 1;
       const inv = 1 - t;
       const depth = card.querySelector<HTMLElement>("[data-depth]");
-      const veil = card.querySelector<HTMLElement>("[data-veil]");
+      const veils = card.querySelectorAll<HTMLElement>("[data-veil]");
       const floor = card.querySelector<HTMLElement>("[data-floor]");
       if (depth) {
         depth.style.transform = `translateZ(${-120 * inv}px) rotateY(${side * -14 * inv}deg) scale(${0.9 + 0.1 * t})`;
@@ -69,10 +76,10 @@ export function PlayerCarousel() {
         depth.style.setProperty("--drop-blur", `${40 + 40 * t}px`);
         depth.style.setProperty("--gold-blur", `${26 + 28 * t}px`);
       }
-      if (veil) veil.style.opacity = String(0.4 * inv);
+      veils.forEach((veil) => (veil.style.opacity = String(0.4 * inv)));
       if (floor) floor.style.opacity = String(t);
     });
-  }, [stepWidth]);
+  }, [stepWidth, CARD_COUNT]);
 
   const onScroll = useCallback(() => {
     if (rafRef.current != null) return;
@@ -90,7 +97,7 @@ export function PlayerCarousel() {
     const onResize = () => applyDepth();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [applyDepth, stepWidth]);
+  }, [applyDepth, stepWidth, START_INDEX]);
 
   const scrollToIndex = useCallback(
     (i: number) => {
@@ -99,7 +106,7 @@ export function PlayerCarousel() {
       const idx = Math.max(0, Math.min(CARD_COUNT - 1, i));
       track.scrollTo({ left: idx * stepWidth(), behavior: reduced ? "auto" : "smooth" });
     },
-    [reduced, stepWidth],
+    [reduced, stepWidth, CARD_COUNT],
   );
 
   const onPointerDown = (e: React.PointerEvent, index: number) => {
@@ -170,18 +177,18 @@ export function PlayerCarousel() {
         style={{ touchAction: "pan-x", perspective: "1000px" }}
         className="flex snap-x snap-mandatory gap-[1.5vw] overflow-x-auto overscroll-x-contain px-[38vw] py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {Array.from({ length: CARD_COUNT }).map((_, i) => {
+        {items.map((card, i) => {
           const isActive = i === active;
           const isFlipped = isActive && flipped;
           return (
             <div
-              key={i}
+              key={card?.id ?? i}
               ref={(el) => {
                 cardRefs.current[i] = el;
               }}
               role="group"
               aria-roledescription="slide"
-              aria-label={`Card ${i + 1} of ${CARD_COUNT}`}
+              aria-label={card ? `${card.display_name}, ${card.day_job_title}` : `Card ${i + 1} of ${CARD_COUNT}`}
               className="relative aspect-5/6 w-[22vw] shrink-0 snap-center [perspective:1000px]"
             >
               <div
@@ -200,11 +207,17 @@ export function PlayerCarousel() {
                     reduced={reduced}
                     visible={!isFlipped}
                     ariaHidden={isFlipped}
+                    imageSrc={card?.apparel_photo_url ?? undefined}
+                    imageAlt={card ? `${card.display_name} in Lorenzi Park Lyons apparel` : undefined}
+                    caption={card?.display_name}
                   />
                   <CardFace
                     reduced={reduced}
                     visible={isFlipped}
                     ariaHidden={!isFlipped}
+                    imageSrc={card?.day_job_photo_url ?? undefined}
+                    imageAlt={card ? `${card.display_name} at work as a ${card.day_job_title}` : undefined}
+                    caption={card?.day_job_title}
                   />
                 </div>
 
@@ -243,10 +256,16 @@ function CardFace({
   visible,
   ariaHidden,
   reduced,
+  imageSrc,
+  imageAlt,
+  caption,
 }: {
   visible: boolean;
   ariaHidden: boolean;
   reduced: boolean;
+  imageSrc?: string | undefined;
+  imageAlt?: string | undefined;
+  caption?: string | undefined;
 }) {
   return (
     <div
@@ -259,6 +278,15 @@ function CardFace({
       }}
     >
       <div className="card-lacquer relative h-full w-full overflow-hidden rounded-3xl bg-background">
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt={imageAlt ?? ""}
+            loading="lazy"
+            draggable={false}
+            className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover object-top"
+          />
+        )}
         <div
           aria-hidden
           className="card-tonal-falloff pointer-events-none absolute inset-0"
@@ -271,6 +299,11 @@ function CardFace({
           aria-hidden
           className="card-reflection pointer-events-none absolute inset-0 mix-blend-screen"
         />
+        {caption && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-background via-background/70 to-transparent px-1 pb-1 pt-4 text-center">
+            <p className="truncate font-display text-[7px] leading-tight tracking-wide text-gold">{caption}</p>
+          </div>
+        )}
         <div
           data-veil
           aria-hidden
