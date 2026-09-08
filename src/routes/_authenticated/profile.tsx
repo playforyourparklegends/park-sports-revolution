@@ -1,8 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { BottomTabs } from "@/components/BottomTabs";
 import { supabase } from "@/integrations/supabase/client";
+import { amIAdmin } from "@/lib/ambassador.functions";
 import { PARK_NAMES, ROLE_LABELS, useMyProfile } from "@/lib/profile";
+
 
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({
