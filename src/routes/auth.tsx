@@ -121,6 +121,28 @@ function AuthPage() {
             >
               {mode === "signin" ? "No account? Sign up" : "Already a member? Sign in"}
             </button>
+
+            {import.meta.env.DEV && (
+              <button
+                type="button"
+                disabled={busy}
+                onClick={async () => {
+                  setBusy(true);
+                  setError(null);
+                  setMessage(null);
+                  const { error: devError } = await supabase.auth.signInWithPassword({
+                    email: "dev@legendsofthepark.test",
+                    password: "LegendsDev2026!",
+                  });
+                  if (devError) setError(devError.message);
+                  else navigate({ to: "/park", replace: true });
+                  setBusy(false);
+                }}
+                className="mt-4 w-full rounded-md border border-gold/30 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-gold/70 transition-colors hover:border-gold hover:text-gold disabled:opacity-50"
+              >
+                Dev Sign In
+              </button>
+            )}
           </div>
         </div>
       </div>
