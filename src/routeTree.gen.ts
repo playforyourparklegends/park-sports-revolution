@@ -23,6 +23,7 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as AuthenticatedSelectParkRouteImport } from './routes/_authenticated/select-park'
 import { Route as AuthenticatedSelectRoleRouteImport } from './routes/_authenticated/select-role'
+import { Route as AuthenticatedStudioRouteImport } from './routes/_authenticated/studio'
 import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
@@ -100,6 +101,11 @@ const AuthenticatedSelectRoleRoute = AuthenticatedSelectRoleRouteImport.update({
   path: '/select-role',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedStudioRoute = AuthenticatedStudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiGenerateImageRoute = ApiGenerateImageRouteImport.update({
   id: '/api/generate-image',
   path: '/api/generate-image',
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/review': typeof AuthenticatedReviewRoute
   '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
+  '/studio': typeof AuthenticatedStudioRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/review': typeof AuthenticatedReviewRoute
   '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
+  '/studio': typeof AuthenticatedStudioRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/_authenticated/select-park': typeof AuthenticatedSelectParkRoute
   '/_authenticated/select-role': typeof AuthenticatedSelectRoleRoute
+  '/_authenticated/studio': typeof AuthenticatedStudioRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/select-park'
     | '/select-role'
+    | '/studio'
     | '/api/generate-image'
     | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/select-park'
     | '/select-role'
+    | '/studio'
     | '/api/generate-image'
     | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
@@ -246,6 +257,7 @@ export interface FileRouteTypes {
     | '/_authenticated/review'
     | '/_authenticated/select-park'
     | '/_authenticated/select-role'
+    | '/_authenticated/studio'
     | '/api/generate-image'
     | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
@@ -366,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSelectRoleRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/studio': {
+      id: '/_authenticated/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof AuthenticatedStudioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/generate-image': {
       id: '/api/generate-image'
       path: '/api/generate-image'
@@ -414,6 +433,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
   AuthenticatedSelectParkRoute: typeof AuthenticatedSelectParkRoute
   AuthenticatedSelectRoleRoute: typeof AuthenticatedSelectRoleRoute
+  AuthenticatedStudioRoute: typeof AuthenticatedStudioRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -426,6 +446,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
   AuthenticatedSelectParkRoute: AuthenticatedSelectParkRoute,
   AuthenticatedSelectRoleRoute: AuthenticatedSelectRoleRoute,
+  AuthenticatedStudioRoute: AuthenticatedStudioRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

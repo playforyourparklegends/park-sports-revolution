@@ -1,8 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { BottomTabs } from "@/components/BottomTabs";
 import { supabase } from "@/integrations/supabase/client";
+import { amIAdmin } from "@/lib/ambassador.functions";
 import { PARK_NAMES, ROLE_LABELS, useMyProfile } from "@/lib/profile";
+
 
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({
@@ -28,6 +31,10 @@ function ProfilePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { data: profile, isLoading } = useMyProfile();
+  const checkAdmin = useServerFn(amIAdmin);
+  const { data: adminData } = useQuery({ queryKey: ["am-i-admin"], queryFn: () => checkAdmin() });
+  const isAdmin = adminData?.isAdmin === true;
+
 
   async function signOut() {
     await queryClient.cancelQueries();
@@ -77,13 +84,23 @@ function ProfilePage() {
           </div>
         </div>
 
+        {isAdmin && (
+          <Link
+            to="/studio"
+            className="mt-8 block w-full rounded-md border border-gold/40 px-4 py-3 text-center font-display text-[11px] uppercase tracking-[0.22em] text-gold transition-colors hover:border-gold"
+          >
+            Image Studio
+          </Link>
+        )}
+
         <button
           type="button"
           onClick={signOut}
-          className="mt-8 w-full rounded-md border border-gold/30 px-4 py-3 font-display text-[11px] uppercase tracking-[0.22em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
+          className="mt-4 w-full rounded-md border border-gold/30 px-4 py-3 font-display text-[11px] uppercase tracking-[0.22em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
         >
           Sign Out
         </button>
+
       </div>
 
       <BottomTabs />
