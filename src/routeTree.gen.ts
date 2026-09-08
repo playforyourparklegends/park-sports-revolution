@@ -23,6 +23,7 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as AuthenticatedSelectParkRouteImport } from './routes/_authenticated/select-park'
 import { Route as AuthenticatedSelectRoleRouteImport } from './routes/_authenticated/select-role'
+import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
@@ -97,6 +98,11 @@ const AuthenticatedSelectRoleRoute = AuthenticatedSelectRoleRouteImport.update({
   path: '/select-role',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiGenerateImageRoute = ApiGenerateImageRouteImport.update({
+  id: '/api/generate-image',
+  path: '/api/generate-image',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/review': typeof AuthenticatedReviewRoute
   '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/review': typeof AuthenticatedReviewRoute
   '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/_authenticated/select-park': typeof AuthenticatedSelectParkRoute
   '/_authenticated/select-role': typeof AuthenticatedSelectRoleRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -178,6 +187,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/select-park'
     | '/select-role'
+    | '/api/generate-image'
     | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/select-park'
     | '/select-role'
+    | '/api/generate-image'
     | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
   id:
@@ -213,6 +224,7 @@ export interface FileRouteTypes {
     | '/_authenticated/review'
     | '/_authenticated/select-park'
     | '/_authenticated/select-role'
+    | '/api/generate-image'
     | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
@@ -223,6 +235,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   McpRoute: typeof McpRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  ApiGenerateImageRoute: typeof ApiGenerateImageRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
@@ -327,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSelectRoleRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/generate-image': {
+      id: '/api/generate-image'
+      path: '/api/generate-image'
+      fullPath: '/api/generate-image'
+      preLoaderRoute: typeof ApiGenerateImageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
@@ -378,6 +398,7 @@ const rootRouteChildren: RootRouteChildren = {
   McpRoute: McpRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  ApiGenerateImageRoute: ApiGenerateImageRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }

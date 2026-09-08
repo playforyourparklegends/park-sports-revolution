@@ -1,7 +1,7 @@
 # Project Roadmap
 
 ## Active
-- Enable Lovable AI Gateway for in-app AI features
+- Enable Lovable AI Gateway for in-app AI features (image presets done: hero, poster)
 
 ## Backlog
 - Complete Stripe live onboarding and bank connection (user-owned)
