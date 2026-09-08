@@ -19,46 +19,52 @@ export type Database = {
           apparel_photo_url: string | null
           day_job_photo_url: string | null
           day_job_title: string
+          display_name: string | null
           id: string
+          is_fictional: boolean
           park: string
           park_id: string | null
           reviewed_at: string | null
           reviewer_note: string | null
           status: string
           submitted_at: string
-          user_id: string
+          user_id: string | null
           why_trust_me_text: string | null
-          why_trust_me_video_url: string
+          why_trust_me_video_url: string | null
         }
         Insert: {
           apparel_photo_url?: string | null
           day_job_photo_url?: string | null
           day_job_title: string
+          display_name?: string | null
           id?: string
+          is_fictional?: boolean
           park: string
           park_id?: string | null
           reviewed_at?: string | null
           reviewer_note?: string | null
           status?: string
           submitted_at?: string
-          user_id: string
+          user_id?: string | null
           why_trust_me_text?: string | null
-          why_trust_me_video_url: string
+          why_trust_me_video_url?: string | null
         }
         Update: {
           apparel_photo_url?: string | null
           day_job_photo_url?: string | null
           day_job_title?: string
+          display_name?: string | null
           id?: string
+          is_fictional?: boolean
           park?: string
           park_id?: string | null
           reviewed_at?: string | null
           reviewer_note?: string | null
           status?: string
           submitted_at?: string
-          user_id?: string
+          user_id?: string | null
           why_trust_me_text?: string | null
-          why_trust_me_video_url?: string
+          why_trust_me_video_url?: string | null
         }
         Relationships: [
           {
@@ -77,9 +83,51 @@ export type Database = {
           },
         ]
       }
+      legends: {
+        Row: {
+          achievement_text: string | null
+          created_at: string
+          id: string
+          is_fictional: boolean
+          monument_image_url: string | null
+          name: string
+          park_id: string
+          position: string
+        }
+        Insert: {
+          achievement_text?: string | null
+          created_at?: string
+          id?: string
+          is_fictional?: boolean
+          monument_image_url?: string | null
+          name: string
+          park_id: string
+          position: string
+        }
+        Update: {
+          achievement_text?: string | null
+          created_at?: string
+          id?: string
+          is_fictional?: boolean
+          monument_image_url?: string | null
+          name?: string
+          park_id?: string
+          position?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "legends_park_id_fkey"
+            columns: ["park_id"]
+            isOneToOne: false
+            referencedRelation: "parks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       parks: {
         Row: {
           created_at: string
+          crest_image_url: string | null
           display_name: string
           id: string
           mascot_name: string | null
@@ -92,6 +140,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          crest_image_url?: string | null
           display_name: string
           id?: string
           mascot_name?: string | null
@@ -104,6 +153,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          crest_image_url?: string | null
           display_name?: string
           id?: string
           mascot_name?: string | null
@@ -148,6 +198,47 @@ export type Database = {
           role?: Database["public"]["Enums"]["member_role"] | null
         }
         Relationships: []
+      }
+      roster_players: {
+        Row: {
+          created_at: string
+          id: string
+          is_fictional: boolean
+          jersey_number: number | null
+          name: string
+          park_id: string
+          portrait_image_url: string | null
+          position: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_fictional?: boolean
+          jersey_number?: number | null
+          name: string
+          park_id: string
+          portrait_image_url?: string | null
+          position: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_fictional?: boolean
+          jersey_number?: number | null
+          name?: string
+          park_id?: string
+          portrait_image_url?: string | null
+          position?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roster_players_park_id_fkey"
+            columns: ["park_id"]
+            isOneToOne: false
+            referencedRelation: "parks"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       subscriptions: {
         Row: {
