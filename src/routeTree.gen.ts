@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAmbassadorRouteImport } from './routes/_authenticated/ambassador'
+import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
 import { Route as AuthenticatedParkRouteImport } from './routes/_authenticated/park'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
@@ -36,6 +37,11 @@ const AuthenticatedAmbassadorRoute = AuthenticatedAmbassadorRouteImport.update({
   path: '/ambassador',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedHomeRoute = AuthenticatedHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedParkRoute = AuthenticatedParkRouteImport.update({
   id: '/park',
   path: '/park',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/ambassador': typeof AuthenticatedAmbassadorRoute
+  '/home': typeof AuthenticatedHomeRoute
   '/park': typeof AuthenticatedParkRoute
   '/review': typeof AuthenticatedReviewRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/ambassador': typeof AuthenticatedAmbassadorRoute
+  '/home': typeof AuthenticatedHomeRoute
   '/park': typeof AuthenticatedParkRoute
   '/review': typeof AuthenticatedReviewRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/ambassador': typeof AuthenticatedAmbassadorRoute
+  '/_authenticated/home': typeof AuthenticatedHomeRoute
   '/_authenticated/park': typeof AuthenticatedParkRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/ambassador'
+    | '/home'
     | '/park'
     | '/review'
     | '/api/public/payments/webhook'
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/ambassador'
+    | '/home'
     | '/park'
     | '/review'
     | '/api/public/payments/webhook'
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/ambassador'
+    | '/_authenticated/home'
     | '/_authenticated/park'
     | '/_authenticated/review'
     | '/api/public/payments/webhook'
@@ -144,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAmbassadorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/home': {
+      id: '/_authenticated/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof AuthenticatedHomeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/park': {
       id: '/_authenticated/park'
       path: '/park'
@@ -170,12 +189,14 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAmbassadorRoute: typeof AuthenticatedAmbassadorRoute
+  AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
   AuthenticatedParkRoute: typeof AuthenticatedParkRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAmbassadorRoute: AuthenticatedAmbassadorRoute,
+  AuthenticatedHomeRoute: AuthenticatedHomeRoute,
   AuthenticatedParkRoute: AuthenticatedParkRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
 }
