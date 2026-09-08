@@ -25,9 +25,9 @@ function TabItem({
     <li className="flex-1">
       <Link
         to={to}
-        activeProps={{ className: "text-gold" }}
-        inactiveProps={{ className: "text-muted-foreground" }}
-        className="flex flex-col items-center gap-1 py-2.5 transition-colors hover:text-gold"
+        activeProps={{ className: "text-foreground" }}
+        inactiveProps={{ className: "text-foreground" }}
+        className="flex flex-col items-center gap-1 py-2.5 transition-colors hover:text-foreground"
       >
         {icon}
         <span className="font-display text-[10px] uppercase tracking-[0.22em]">{label}</span>
