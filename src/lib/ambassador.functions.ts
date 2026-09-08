@@ -108,9 +108,12 @@ export const listApplicationsForReview = createServerFn({ method: "GET" })
       .select(
         "id, user_id, park, day_job_title, why_trust_me_text, why_trust_me_video_url, day_job_photo_url, status, submitted_at",
       )
+      .eq("is_fictional", false)
       .order("submitted_at", { ascending: false });
     if (error) throw new Error(error.message);
-    const rows = data ?? [];
+    const rows = (data ?? []).filter(
+      (r): r is typeof r & { user_id: string } => typeof r.user_id === "string",
+    );
     if (rows.length === 0) return [];
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -122,9 +125,11 @@ export const listApplicationsForReview = createServerFn({ method: "GET" })
 
     return Promise.all(
       rows.map(async (r) => {
-        const video = await context.supabase.storage
-          .from("ambassador-videos")
-          .createSignedUrl(r.why_trust_me_video_url, 60 * 30);
+        const video = r.why_trust_me_video_url
+          ? await context.supabase.storage
+              .from("ambassador-videos")
+              .createSignedUrl(r.why_trust_me_video_url, 60 * 30)
+          : null;
         const photo = r.day_job_photo_url
           ? await context.supabase.storage
               .from("ambassador-videos")
