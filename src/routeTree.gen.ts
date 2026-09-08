@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAmbassadorRouteImport } from './routes/_authenticated/ambassador'
 import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
 import { Route as AuthenticatedParkRouteImport } from './routes/_authenticated/park'
+import { Route as AuthenticatedPaseoVerdeRouteImport } from './routes/_authenticated/paseo-verde'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as AuthenticatedSelectParkRouteImport } from './routes/_authenticated/select-park'
 import { Route as AuthenticatedSelectRoleRouteImport } from './routes/_authenticated/select-role'
@@ -49,6 +50,11 @@ const AuthenticatedParkRoute = AuthenticatedParkRouteImport.update({
   path: '/park',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPaseoVerdeRoute = AuthenticatedPaseoVerdeRouteImport.update({
+  id: '/paseo-verde',
+  path: '/paseo-verde',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   id: '/review',
   path: '/review',
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/ambassador': typeof AuthenticatedAmbassadorRoute
   '/home': typeof AuthenticatedHomeRoute
   '/park': typeof AuthenticatedParkRoute
+  '/paseo-verde': typeof AuthenticatedPaseoVerdeRoute
   '/review': typeof AuthenticatedReviewRoute
   '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/ambassador': typeof AuthenticatedAmbassadorRoute
   '/home': typeof AuthenticatedHomeRoute
   '/park': typeof AuthenticatedParkRoute
+  '/paseo-verde': typeof AuthenticatedPaseoVerdeRoute
   '/review': typeof AuthenticatedReviewRoute
   '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/_authenticated/ambassador': typeof AuthenticatedAmbassadorRoute
   '/_authenticated/home': typeof AuthenticatedHomeRoute
   '/_authenticated/park': typeof AuthenticatedParkRoute
+  '/_authenticated/paseo-verde': typeof AuthenticatedPaseoVerdeRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/_authenticated/select-park': typeof AuthenticatedSelectParkRoute
   '/_authenticated/select-role': typeof AuthenticatedSelectRoleRoute
@@ -114,6 +123,7 @@ export interface FileRouteTypes {
     | '/ambassador'
     | '/home'
     | '/park'
+    | '/paseo-verde'
     | '/review'
     | '/select-park'
     | '/select-role'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
     | '/ambassador'
     | '/home'
     | '/park'
+    | '/paseo-verde'
     | '/review'
     | '/select-park'
     | '/select-role'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '/_authenticated/ambassador'
     | '/_authenticated/home'
     | '/_authenticated/park'
+    | '/_authenticated/paseo-verde'
     | '/_authenticated/review'
     | '/_authenticated/select-park'
     | '/_authenticated/select-role'
@@ -194,6 +206,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedParkRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/paseo-verde': {
+      id: '/_authenticated/paseo-verde'
+      path: '/paseo-verde'
+      fullPath: '/paseo-verde'
+      preLoaderRoute: typeof AuthenticatedPaseoVerdeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/review': {
       id: '/_authenticated/review'
       path: '/review'
@@ -229,6 +248,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAmbassadorRoute: typeof AuthenticatedAmbassadorRoute
   AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
   AuthenticatedParkRoute: typeof AuthenticatedParkRoute
+  AuthenticatedPaseoVerdeRoute: typeof AuthenticatedPaseoVerdeRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
   AuthenticatedSelectParkRoute: typeof AuthenticatedSelectParkRoute
   AuthenticatedSelectRoleRoute: typeof AuthenticatedSelectRoleRoute
@@ -238,6 +258,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAmbassadorRoute: AuthenticatedAmbassadorRoute,
   AuthenticatedHomeRoute: AuthenticatedHomeRoute,
   AuthenticatedParkRoute: AuthenticatedParkRoute,
+  AuthenticatedPaseoVerdeRoute: AuthenticatedPaseoVerdeRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
   AuthenticatedSelectParkRoute: AuthenticatedSelectParkRoute,
   AuthenticatedSelectRoleRoute: AuthenticatedSelectRoleRoute,
