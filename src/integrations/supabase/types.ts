@@ -16,10 +16,12 @@ export type Database = {
     Tables: {
       ambassador_applications: {
         Row: {
+          apparel_photo_url: string | null
           day_job_photo_url: string | null
           day_job_title: string
           id: string
           park: string
+          park_id: string | null
           reviewed_at: string | null
           reviewer_note: string | null
           status: string
@@ -29,10 +31,12 @@ export type Database = {
           why_trust_me_video_url: string
         }
         Insert: {
+          apparel_photo_url?: string | null
           day_job_photo_url?: string | null
           day_job_title: string
           id?: string
           park: string
+          park_id?: string | null
           reviewed_at?: string | null
           reviewer_note?: string | null
           status?: string
@@ -42,10 +46,12 @@ export type Database = {
           why_trust_me_video_url: string
         }
         Update: {
+          apparel_photo_url?: string | null
           day_job_photo_url?: string | null
           day_job_title?: string
           id?: string
           park?: string
+          park_id?: string | null
           reviewed_at?: string | null
           reviewer_note?: string | null
           status?: string
@@ -56,6 +62,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "ambassador_applications_park_id_fkey"
+            columns: ["park_id"]
+            isOneToOne: false
+            referencedRelation: "parks"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "ambassador_applications_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -63,6 +76,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      parks: {
+        Row: {
+          created_at: string
+          display_name: string
+          id: string
+          mascot_name: string | null
+          primary_color: string | null
+          secondary_color: string | null
+          slug: string
+          state: string | null
+          status: string
+          text_color: string | null
+        }
+        Insert: {
+          created_at?: string
+          display_name: string
+          id?: string
+          mascot_name?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
+          slug: string
+          state?: string | null
+          status?: string
+          text_color?: string | null
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          id?: string
+          mascot_name?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
+          slug?: string
+          state?: string | null
+          status?: string
+          text_color?: string | null
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
