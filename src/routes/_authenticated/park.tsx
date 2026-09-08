@@ -1,10 +1,10 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
-import { LogOut } from "lucide-react";
-import { PlayerCarousel } from "@/components/PlayerCarousel";
-import { BottomTabs } from "@/components/BottomTabs";
-import { supabase } from "@/integrations/supabase/client";
-import monument from "@/assets/lorenzi-park-monument.jpg";
+import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { TeamHome, TeamHomeFallback } from "@/components/TeamHome";
+import { getParkBySlug } from "@/lib/parks.functions";
+
+const SLUG = "lorenzi_park_lyons";
 
 export const Route = createFileRoute("/_authenticated/park")({
   head: () => ({
@@ -29,38 +29,12 @@ export const Route = createFileRoute("/_authenticated/park")({
 });
 
 function ParkHome() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const fetchPark = useServerFn(getParkBySlug);
+  const { data: park } = useQuery({
+    queryKey: ["park", SLUG],
+    queryFn: () => fetchPark({ data: { slug: SLUG } }),
+  });
 
-  async function signOut() {
-    await queryClient.cancelQueries();
-    queryClient.clear();
-    await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
-  }
-
-  return (
-    <main className="relative min-h-screen overflow-hidden bg-background">
-      <img
-        src={monument}
-        width={768}
-        height={1376}
-        alt="A distant translucent bronze-gold apparition of a Legends of Lorenzi Park champion, visible from the waist up near the Spring Mountains behind Lorenzi Park at sunset"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <button
-        type="button"
-        onClick={signOut}
-        aria-label="Sign out"
-        className="absolute right-3 top-[max(0.75rem,env(safe-area-inset-top))] z-20 rounded-full bg-black/40 p-2 text-gold/70 transition-colors hover:text-gold"
-      >
-        <LogOut className="h-4 w-4" />
-      </button>
-      <div className="absolute inset-x-0 bottom-0 z-10 pb-[calc(3.75rem+max(0.25rem,env(safe-area-inset-bottom)))]">
-        <PlayerCarousel />
-      </div>
-
-      <BottomTabs />
-    </main>
-  );
+  if (!park) return <TeamHomeFallback slug={SLUG} />;
+  return <TeamHome park={park} />;
 }
