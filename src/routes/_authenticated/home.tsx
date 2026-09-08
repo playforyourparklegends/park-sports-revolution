@@ -63,7 +63,7 @@ function HomeRouter() {
 
 function FanDashboard({ chosenPark }: { chosenPark: string }) {
   const fetchPark = useServerFn(getParkBySlug);
-  const { data: park } = useQuery({
+  const { data: park, isLoading } = useQuery({
     queryKey: ["park", chosenPark],
     queryFn: () => fetchPark({ data: { slug: chosenPark } }),
   });
@@ -77,7 +77,11 @@ function FanDashboard({ chosenPark }: { chosenPark: string }) {
           Legends of the Park
         </p>
         <h1 className="mt-4 font-display text-3xl leading-tight tracking-wide text-gold">
-          {park?.display_name ?? "Your Park"}
+          {isLoading ? (
+            <span className="inline-block h-8 w-48 animate-pulse rounded bg-gold/20" />
+          ) : (
+            (park?.display_name ?? "Your Park")
+          )}
         </h1>
         <div className="mx-auto mt-5 h-[1px] w-24 bg-gold/50" />
         <p className="mt-5 font-display text-xs uppercase tracking-[0.3em] text-foreground/70">
