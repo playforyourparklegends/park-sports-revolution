@@ -231,36 +231,6 @@ export function PlayerCarousel() {
       </div>
 
 
-      <div className="mt-2 flex items-center justify-center gap-3">
-        <button
-          type="button"
-          aria-label="Previous card"
-          disabled={active === 0}
-          onClick={() => scrollToIndex(active - 1)}
-          className="text-gold/70 disabled:opacity-25"
-        >
-          &#8249;
-        </button>
-        {Array.from({ length: CARD_COUNT }).map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            aria-label={`Go to card ${i + 1}`}
-            aria-current={i === active}
-            onClick={() => scrollToIndex(i)}
-            className={`size-1.5 rounded-full ${i === active ? "bg-gold" : "bg-gold/30"}`}
-          />
-        ))}
-        <button
-          type="button"
-          aria-label="Next card"
-          disabled={active === CARD_COUNT - 1}
-          onClick={() => scrollToIndex(active + 1)}
-          className="text-gold/70 disabled:opacity-25"
-        >
-          &#8250;
-        </button>
-      </div>
 
       <p aria-live="polite" className="sr-only">
         Card {active + 1} of {CARD_COUNT}
