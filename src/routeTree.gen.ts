@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAmbassadorRouteImport } from './routes/_authenticated/ambassador'
 import { Route as AuthenticatedParkRouteImport } from './routes/_authenticated/park'
+import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +30,58 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAmbassadorRoute = AuthenticatedAmbassadorRouteImport.update({
+  id: '/ambassador',
+  path: '/ambassador',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedParkRoute = AuthenticatedParkRouteImport.update({
   id: '/park',
   path: '/park',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/ambassador': typeof AuthenticatedAmbassadorRoute
   '/park': typeof AuthenticatedParkRoute
+  '/review': typeof AuthenticatedReviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/ambassador': typeof AuthenticatedAmbassadorRoute
   '/park': typeof AuthenticatedParkRoute
+  '/review': typeof AuthenticatedReviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/ambassador': typeof AuthenticatedAmbassadorRoute
   '/_authenticated/park': typeof AuthenticatedParkRoute
+  '/_authenticated/review': typeof AuthenticatedReviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/park'
+  fullPaths: '/' | '/auth' | '/ambassador' | '/park' | '/review'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/park'
-  id: '__root__' | '/' | '/_authenticated' | '/auth' | '/_authenticated/park'
+  to: '/' | '/auth' | '/ambassador' | '/park' | '/review'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/ambassador'
+    | '/_authenticated/park'
+    | '/_authenticated/review'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -88,6 +113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/ambassador': {
+      id: '/_authenticated/ambassador'
+      path: '/ambassador'
+      fullPath: '/ambassador'
+      preLoaderRoute: typeof AuthenticatedAmbassadorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/park': {
       id: '/_authenticated/park'
       path: '/park'
@@ -95,15 +127,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedParkRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/review': {
+      id: '/_authenticated/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof AuthenticatedReviewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAmbassadorRoute: typeof AuthenticatedAmbassadorRoute
   AuthenticatedParkRoute: typeof AuthenticatedParkRoute
+  AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAmbassadorRoute: AuthenticatedAmbassadorRoute,
   AuthenticatedParkRoute: AuthenticatedParkRoute,
+  AuthenticatedReviewRoute: AuthenticatedReviewRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
