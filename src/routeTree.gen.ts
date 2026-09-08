@@ -16,6 +16,7 @@ import { Route as AuthenticatedAmbassadorRouteImport } from './routes/_authentic
 import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
 import { Route as AuthenticatedParkRouteImport } from './routes/_authenticated/park'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
+import { Route as AuthenticatedSelectParkRouteImport } from './routes/_authenticated/select-park'
 import { Route as AuthenticatedSelectRoleRouteImport } from './routes/_authenticated/select-role'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
@@ -53,6 +54,11 @@ const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   path: '/review',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSelectParkRoute = AuthenticatedSelectParkRouteImport.update({
+  id: '/select-park',
+  path: '/select-park',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedSelectRoleRoute = AuthenticatedSelectRoleRouteImport.update({
   id: '/select-role',
   path: '/select-role',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/home': typeof AuthenticatedHomeRoute
   '/park': typeof AuthenticatedParkRoute
   '/review': typeof AuthenticatedReviewRoute
+  '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/home': typeof AuthenticatedHomeRoute
   '/park': typeof AuthenticatedParkRoute
   '/review': typeof AuthenticatedReviewRoute
+  '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/_authenticated/home': typeof AuthenticatedHomeRoute
   '/_authenticated/park': typeof AuthenticatedParkRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
+  '/_authenticated/select-park': typeof AuthenticatedSelectParkRoute
   '/_authenticated/select-role': typeof AuthenticatedSelectRoleRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/park'
     | '/review'
+    | '/select-park'
     | '/select-role'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/park'
     | '/review'
+    | '/select-park'
     | '/select-role'
     | '/api/public/payments/webhook'
   id:
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/_authenticated/home'
     | '/_authenticated/park'
     | '/_authenticated/review'
+    | '/_authenticated/select-park'
     | '/_authenticated/select-role'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
@@ -189,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReviewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/select-park': {
+      id: '/_authenticated/select-park'
+      path: '/select-park'
+      fullPath: '/select-park'
+      preLoaderRoute: typeof AuthenticatedSelectParkRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/select-role': {
       id: '/_authenticated/select-role'
       path: '/select-role'
@@ -211,6 +230,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
   AuthenticatedParkRoute: typeof AuthenticatedParkRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
+  AuthenticatedSelectParkRoute: typeof AuthenticatedSelectParkRoute
   AuthenticatedSelectRoleRoute: typeof AuthenticatedSelectRoleRoute
 }
 
@@ -219,6 +239,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHomeRoute: AuthenticatedHomeRoute,
   AuthenticatedParkRoute: AuthenticatedParkRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
+  AuthenticatedSelectParkRoute: AuthenticatedSelectParkRoute,
   AuthenticatedSelectRoleRoute: AuthenticatedSelectRoleRoute,
 }
 
