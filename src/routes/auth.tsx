@@ -37,7 +37,7 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/park", replace: true });
+      if (data.session) navigate({ to: "/home", replace: true });
     });
   }, [navigate]);
 
@@ -57,12 +57,12 @@ function AuthPage() {
         },
       });
       if (signUpError) setError(signUpError.message);
-      else if (data.session) navigate({ to: "/park", replace: true });
+      else if (data.session) navigate({ to: "/home", replace: true });
       else setMessage("Check your email to confirm your account, then sign in.");
     } else {
       const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
       if (signInError) setError(signInError.message);
-      else navigate({ to: "/park", replace: true });
+      else navigate({ to: "/home", replace: true });
     }
     setBusy(false);
   }
@@ -135,7 +135,7 @@ function AuthPage() {
                     password: "LegendsDev2026!",
                   });
                   if (devError) setError(devError.message);
-                  else navigate({ to: "/park", replace: true });
+                  else navigate({ to: "/home", replace: true });
                   setBusy(false);
                 }}
                 className="mt-4 w-full rounded-md border border-gold/30 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-gold/70 transition-colors hover:border-gold hover:text-gold disabled:opacity-50"

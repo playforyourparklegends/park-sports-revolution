@@ -66,28 +66,34 @@ export type Database = {
       }
       profiles: {
         Row: {
+          chosen_park: Database["public"]["Enums"]["park_choice"] | null
           created_at: string
           display_name: string
           fan_tier: string | null
           favorite_park: string | null
           id: string
           is_admin: boolean
+          role: Database["public"]["Enums"]["member_role"] | null
         }
         Insert: {
+          chosen_park?: Database["public"]["Enums"]["park_choice"] | null
           created_at?: string
           display_name?: string
           fan_tier?: string | null
           favorite_park?: string | null
           id: string
           is_admin?: boolean
+          role?: Database["public"]["Enums"]["member_role"] | null
         }
         Update: {
+          chosen_park?: Database["public"]["Enums"]["park_choice"] | null
           created_at?: string
           display_name?: string
           fan_tier?: string | null
           favorite_park?: string | null
           id?: string
           is_admin?: boolean
+          role?: Database["public"]["Enums"]["member_role"] | null
         }
         Relationships: []
       }
@@ -150,7 +156,8 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      member_role: "player" | "ambassador" | "fan"
+      park_choice: "lorenzi_park_lyons" | "paseo_verde_park_panthers"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -277,6 +284,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      member_role: ["player", "ambassador", "fan"],
+      park_choice: ["lorenzi_park_lyons", "paseo_verde_park_panthers"],
+    },
   },
 } as const

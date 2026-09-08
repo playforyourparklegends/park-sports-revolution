@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import { PlayerCarousel } from "@/components/PlayerCarousel";
 import { ParkAmbassadorsTitle } from "@/components/ParkAmbassadorsTitle";
+import { BottomTabs } from "@/components/BottomTabs";
 import { supabase } from "@/integrations/supabase/client";
 import monument from "@/assets/lorenzi-park-monument.jpg";
 
@@ -56,7 +57,7 @@ function ParkHome() {
       >
         <LogOut className="h-4 w-4" />
       </button>
-      <div className="absolute inset-x-0 bottom-0 z-10 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+      <div className="absolute inset-x-0 bottom-0 z-10 pb-[calc(3.75rem+max(0.25rem,env(safe-area-inset-bottom)))]">
         <PlayerCarousel />
         <ParkAmbassadorsTitle />
         <div className="mt-1 text-center">
@@ -69,6 +70,7 @@ function ParkHome() {
         </div>
       </div>
 
+      <BottomTabs />
     </main>
   );
 }
