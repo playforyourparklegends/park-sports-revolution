@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAmbassadorRouteImport } from './routes/_authenticated/ambassador'
 import { Route as AuthenticatedParkRouteImport } from './routes/_authenticated/park'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,6 +46,12 @@ const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   path: '/review',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/ambassador': typeof AuthenticatedAmbassadorRoute
   '/park': typeof AuthenticatedParkRoute
   '/review': typeof AuthenticatedReviewRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +67,7 @@ export interface FileRoutesByTo {
   '/ambassador': typeof AuthenticatedAmbassadorRoute
   '/park': typeof AuthenticatedParkRoute
   '/review': typeof AuthenticatedReviewRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +77,25 @@ export interface FileRoutesById {
   '/_authenticated/ambassador': typeof AuthenticatedAmbassadorRoute
   '/_authenticated/park': typeof AuthenticatedParkRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/ambassador' | '/park' | '/review'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/ambassador'
+    | '/park'
+    | '/review'
+    | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/ambassador' | '/park' | '/review'
+  to:
+    | '/'
+    | '/auth'
+    | '/ambassador'
+    | '/park'
+    | '/review'
+    | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
@@ -82,12 +104,14 @@ export interface FileRouteTypes {
     | '/_authenticated/ambassador'
     | '/_authenticated/park'
     | '/_authenticated/review'
+    | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -134,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReviewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -156,6 +187,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
