@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "sdk_version": "2.0.3",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://otsepswryqpiskkoktlh.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "legends-of-the-park",
+      "version": "0.1.0",
+      "title": "Legends of the Park"
+    },
+    "tools": [
+      {
+        "name": "echo",
+        "title": "Echo",
+        "description": "Echo the input text back to the caller. Useful for verifying MCP connectivity.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Text to echo back."
+            }
+          },
+          "required": [
+            "text"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_profile",
+        "title": "Get member profile",
+        "description": "Return the signed-in member's profile: display name, role, chosen park, email, and admin status.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_ambassador_status",
+        "title": "Get Park Ambassador application status",
+        "description": "Return the signed-in member's Park Ambassador application status, park, day job, and reviewer note.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

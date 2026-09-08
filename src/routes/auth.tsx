@@ -1,9 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+
+const authSearchSchema = z.object({ next: z.string().optional() });
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
+  validateSearch: (s: Record<string, unknown>) => authSearchSchema.parse(s),
   head: () => ({
     meta: [
       { title: "Member Access — Legends of Lorenzi Park" },
@@ -27,6 +31,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,11 +40,13 @@ function AuthPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const afterAuth = next ? { to: next as any, replace: true } : { to: "/home", replace: true };
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/home", replace: true });
+      if (data.session) navigate(afterAuth);
     });
-  }, [navigate]);
+  }, [navigate, afterAuth]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -57,12 +64,12 @@ function AuthPage() {
         },
       });
       if (signUpError) setError(signUpError.message);
-      else if (data.session) navigate({ to: "/home", replace: true });
+      else if (data.session) navigate(afterAuth);
       else setMessage("Check your email to confirm your account, then sign in.");
     } else {
       const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
       if (signInError) setError(signInError.message);
-      else navigate({ to: "/home", replace: true });
+      else navigate(afterAuth);
     }
     setBusy(false);
   }
@@ -135,7 +142,7 @@ function AuthPage() {
                     password: "LegendsDev2026!",
                   });
                   if (devError) setError(devError.message);
-                  else navigate({ to: "/home", replace: true });
+                  else navigate(afterAuth);
                   setBusy(false);
                 }}
                 className="mt-4 w-full rounded-md border border-gold/30 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-gold/70 transition-colors hover:border-gold hover:text-gold disabled:opacity-50"

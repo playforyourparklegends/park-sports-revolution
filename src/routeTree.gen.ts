@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedAmbassadorRouteImport } from './routes/_authenticated/ambassador'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
 import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
@@ -21,6 +23,7 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as AuthenticatedSelectParkRouteImport } from './routes/_authenticated/select-park'
 import { Route as AuthenticatedSelectRoleRouteImport } from './routes/_authenticated/select-role'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -37,6 +40,17 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedAmbassadorRoute = AuthenticatedAmbassadorRouteImport.update({
   id: '/ambassador',
   path: '/ambassador',
@@ -83,6 +97,11 @@ const AuthenticatedSelectRoleRoute = AuthenticatedSelectRoleRouteImport.update({
   path: '/select-role',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -93,6 +112,8 @@ const ApiPublicPaymentsWebhookRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/ambassador': typeof AuthenticatedAmbassadorRoute
   '/applications': typeof AuthenticatedApplicationsRoute
   '/home': typeof AuthenticatedHomeRoute
@@ -102,11 +123,14 @@ export interface FileRoutesByFullPath {
   '/review': typeof AuthenticatedReviewRoute
   '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/ambassador': typeof AuthenticatedAmbassadorRoute
   '/applications': typeof AuthenticatedApplicationsRoute
   '/home': typeof AuthenticatedHomeRoute
@@ -116,6 +140,7 @@ export interface FileRoutesByTo {
   '/review': typeof AuthenticatedReviewRoute
   '/select-park': typeof AuthenticatedSelectParkRoute
   '/select-role': typeof AuthenticatedSelectRoleRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -123,6 +148,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/ambassador': typeof AuthenticatedAmbassadorRoute
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
   '/_authenticated/home': typeof AuthenticatedHomeRoute
@@ -132,6 +159,7 @@ export interface FileRoutesById {
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/_authenticated/select-park': typeof AuthenticatedSelectParkRoute
   '/_authenticated/select-role': typeof AuthenticatedSelectRoleRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -139,6 +167,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/ambassador'
     | '/applications'
     | '/home'
@@ -148,11 +178,14 @@ export interface FileRouteTypes {
     | '/review'
     | '/select-park'
     | '/select-role'
+    | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/ambassador'
     | '/applications'
     | '/home'
@@ -162,12 +195,15 @@ export interface FileRouteTypes {
     | '/review'
     | '/select-park'
     | '/select-role'
+    | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
     | '/_authenticated/ambassador'
     | '/_authenticated/applications'
     | '/_authenticated/home'
@@ -177,6 +213,7 @@ export interface FileRouteTypes {
     | '/_authenticated/review'
     | '/_authenticated/select-park'
     | '/_authenticated/select-role'
+    | '/.lovable/oauth/consent'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -184,6 +221,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  McpRoute: typeof McpRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -208,6 +248,20 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/ambassador': {
@@ -273,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSelectRoleRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -314,6 +375,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  McpRoute: McpRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
