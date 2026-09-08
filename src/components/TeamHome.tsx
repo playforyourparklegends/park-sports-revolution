@@ -1,10 +1,12 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { LogOut } from "lucide-react";
 import { PlayerCarousel } from "@/components/PlayerCarousel";
 import { BottomTabs } from "@/components/BottomTabs";
 import { supabase } from "@/integrations/supabase/client";
 import type { ParkRecord } from "@/lib/parks.functions";
+import { listParkAmbassadors } from "@/lib/ambassadors.functions";
 import lorenziMonument from "@/assets/lorenzi-park-monument.jpg";
 import paseoVerdeMonument from "@/assets/paseo-verde-park-monument.jpg";
 
@@ -25,6 +27,13 @@ export function TeamHome({ park }: { park: ParkRecord }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const visual = PARK_VISUALS[park.slug];
+  const fetchAmbassadors = useServerFn(listParkAmbassadors);
+  const { data: ambassadors } = useQuery({
+    queryKey: ["park-ambassadors", park.id],
+    queryFn: () => fetchAmbassadors({ data: { parkId: park.id } }),
+    enabled: park.status !== "coming_soon",
+    staleTime: 5 * 60 * 1000,
+  });
 
   async function signOut() {
     await queryClient.cancelQueries();
@@ -67,7 +76,7 @@ export function TeamHome({ park }: { park: ParkRecord }) {
             </p>
           </div>
         ) : (
-          <PlayerCarousel />
+          <PlayerCarousel cards={ambassadors} />
         )}
       </div>
 
