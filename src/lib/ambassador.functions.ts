@@ -171,14 +171,22 @@ export const reviewApplication = createServerFn({ method: "POST" })
   });
 
 /**
- * Server-side gate for the activation payment. Checkout can only start when the
- * caller owns an approved application. Payment provider wiring is pending, so an
- * eligible caller receives `ready: false` with a reason instead of a session URL.
+ * Server-side gate for the activation payment. A checkout session is only created
+ * when the caller owns an approved application; everyone else is refused here, not
+ * merely hidden in the UI.
  */
 export const startAmbassadorCheckout = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        environment: z.enum(["sandbox", "live"]),
+        returnUrl: z.string().url().max(500),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data, context }): Promise<{ clientSecret: string } | { error: string }> => {
+    const { data: app, error } = await context.supabase
       .from("ambassador_applications")
       .select("id, status")
       .eq("user_id", context.userId)
@@ -186,11 +194,60 @@ export const startAmbassadorCheckout = createServerFn({ method: "POST" })
       .limit(1)
       .maybeSingle();
     if (error) throw new Error(error.message);
-    if (!data) throw new Error("Not eligible: no approved ambassador application");
+    if (!app) throw new Error("Not eligible: no approved ambassador application");
 
-    return {
-      ready: false as const,
-      applicationId: data.id,
-      reason: "Payments are not connected to this project yet.",
-    };
+    const { createStripeClient, getStripeErrorMessage } = await import("@/lib/stripe.server");
+    try {
+      const stripe = createStripeClient(data.environment);
+      const prices = await stripe.prices.list({ lookup_keys: ["ambassador_monthly"] });
+      const price = prices.data[0];
+      if (!price) throw new Error("Ambassador membership price not found");
+
+      const {
+        data: { user },
+      } = await context.supabase.auth.getUser();
+      const email = user?.email ?? undefined;
+      const userId = context.userId;
+
+      let customerId: string | undefined;
+      const found = await stripe.customers.search({
+        query: `metadata['userId']:'${userId}'`,
+        limit: 1,
+      });
+      if (found.data[0]) customerId = found.data[0].id;
+      if (!customerId && email) {
+        const existing = await stripe.customers.list({ email, limit: 1 });
+        const match = existing.data[0];
+        if (match) {
+          if (match.metadata?.["userId"] !== userId) {
+            await stripe.customers.update(match.id, {
+              metadata: { ...match.metadata, userId },
+            });
+          }
+          customerId = match.id;
+        }
+      }
+      if (!customerId) {
+        const created = await stripe.customers.create({
+          ...(email && { email }),
+          metadata: { userId },
+        });
+        customerId = created.id;
+      }
+
+      const session = await stripe.checkout.sessions.create({
+        line_items: [{ price: price.id, quantity: 1 }],
+        mode: "subscription",
+        ui_mode: "embedded_page",
+        return_url: data.returnUrl,
+        customer: customerId,
+        managed_payments: { enabled: true },
+        metadata: { userId, managed_payments: "true", applicationId: app.id },
+        subscription_data: { metadata: { userId, applicationId: app.id } },
+      } as never);
+
+      return { clientSecret: session.client_secret ?? "" };
+    } catch (err) {
+      return { error: getStripeErrorMessage(err) };
+    }
   });

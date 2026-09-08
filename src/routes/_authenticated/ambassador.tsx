@@ -1,14 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { VideoRecorder } from "@/components/VideoRecorder";
+import { AmbassadorCheckout } from "@/components/AmbassadorCheckout";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { getStripeEnvironment } from "@/lib/stripe";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  getMyApplication,
-  startAmbassadorCheckout,
-  submitApplication,
-} from "@/lib/ambassador.functions";
+import { getMyApplication, submitApplication } from "@/lib/ambassador.functions";
 
 export const Route = createFileRoute("/_authenticated/ambassador")({
   head: () => ({
@@ -45,8 +44,9 @@ function AmbassadorPage() {
   });
 
   return (
-    <main className="min-h-screen bg-background px-5 pb-16 pt-[max(1.5rem,env(safe-area-inset-top))]">
-      <div className="mx-auto w-full max-w-md">
+    <main className="min-h-screen bg-background pb-16">
+      <PaymentTestModeBanner />
+      <div className="mx-auto w-full max-w-md px-5 pt-6">
         <Link
           to="/park"
           className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:text-gold"
@@ -88,18 +88,30 @@ function StatusCard({
 }: {
   application: NonNullable<Awaited<ReturnType<typeof getMyApplication>>>;
 }) {
-  const checkout = useServerFn(startAmbassadorCheckout);
-  const [result, setResult] = useState<string | null>(null);
-  const activate = useMutation({
-    mutationFn: () => checkout(),
-    onSuccess: (r) =>
-      setResult(
-        r.ready
-          ? "Redirecting to checkout…"
-          : `Approved and eligible. ${r.reason} We will open activation as soon as it is connected.`,
-      ),
-    onError: (e: Error) => setResult(e.message),
+  const [showCheckout, setShowCheckout] = useState(false);
+  const { data: membership } = useQuery({
+    queryKey: ["ambassador-membership"],
+    queryFn: async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      const uid = userData.user?.id;
+      if (!uid) return null;
+      const { data } = await supabase
+        .from("subscriptions")
+        .select("status, current_period_end")
+        .eq("user_id", uid)
+        .eq("environment", getStripeEnvironment())
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      return data ?? null;
+    },
+    refetchInterval: showCheckout ? 4000 : false,
   });
+
+  const isActive =
+    membership != null &&
+    ["active", "trialing", "past_due"].includes(membership.status) &&
+    (!membership.current_period_end || new Date(membership.current_period_end) > new Date());
 
   const label =
     application.status === "approved"
@@ -134,17 +146,25 @@ function StatusCard({
         </p>
       )}
 
-      {application.status === "approved" && (
+      {application.status === "approved" && isActive && (
+        <p className="mt-6 font-display text-sm tracking-[0.16em] text-gold">
+          Ambassador Active — $25 / month
+        </p>
+      )}
+
+      {application.status === "approved" && !isActive && (
         <div className="mt-6">
-          <button
-            type="button"
-            disabled={activate.isPending}
-            onClick={() => activate.mutate()}
-            className="w-full rounded-md bg-gold px-4 py-3 font-display text-xs uppercase tracking-[0.2em] text-gold-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
-          >
-            Activate Ambassador
-          </button>
-          {result && <p className="mt-3 text-xs text-gold">{result}</p>}
+          {showCheckout ? (
+            <AmbassadorCheckout />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowCheckout(true)}
+              className="w-full rounded-md bg-gold px-4 py-3 font-display text-xs uppercase tracking-[0.2em] text-gold-foreground transition-opacity hover:opacity-90"
+            >
+              Activate Ambassador — $25 / month
+            </button>
+          )}
         </div>
       )}
       {application.status === "pending" && (
