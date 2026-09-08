@@ -31,6 +31,10 @@ function ProfilePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { data: profile, isLoading } = useMyProfile();
+  const checkAdmin = useServerFn(amIAdmin);
+  const { data: adminData } = useQuery({ queryKey: ["am-i-admin"], queryFn: () => checkAdmin() });
+  const isAdmin = adminData?.isAdmin === true;
+
 
   async function signOut() {
     await queryClient.cancelQueries();
