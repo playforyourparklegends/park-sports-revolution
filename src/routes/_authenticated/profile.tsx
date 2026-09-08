@@ -77,13 +77,23 @@ function ProfilePage() {
           </div>
         </div>
 
+        {isAdmin && (
+          <Link
+            to="/studio"
+            className="mt-8 block w-full rounded-md border border-gold/40 px-4 py-3 text-center font-display text-[11px] uppercase tracking-[0.22em] text-gold transition-colors hover:border-gold"
+          >
+            Image Studio
+          </Link>
+        )}
+
         <button
           type="button"
           onClick={signOut}
-          className="mt-8 w-full rounded-md border border-gold/30 px-4 py-3 font-display text-[11px] uppercase tracking-[0.22em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
+          className="mt-4 w-full rounded-md border border-gold/30 px-4 py-3 font-display text-[11px] uppercase tracking-[0.22em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
         >
           Sign Out
         </button>
+
       </div>
 
       <BottomTabs />
