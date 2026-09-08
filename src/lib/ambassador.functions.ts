@@ -143,7 +143,7 @@ export const listApplicationsForReview = createServerFn({ method: "GET" })
           submitted_at: r.submitted_at,
           status: r.status as ApplicationStatus,
           applicantName: names.get(r.user_id) || "Member",
-          videoUrl: video.data?.signedUrl ?? null,
+          videoUrl: video?.data?.signedUrl ?? null,
           photoUrl: photo?.data?.signedUrl ?? null,
         };
       }),
