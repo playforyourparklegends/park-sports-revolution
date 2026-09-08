@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useMyProfile } from "@/lib/profile";
 
 export const Route = createFileRoute("/_authenticated/home")({
+  ssr: false,
   component: HomeRouter,
 });
 
